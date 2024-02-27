@@ -47,6 +47,7 @@ public class AppointmentRepository : IAppointmentRepository
         var appointments = await _context.Appointments
             .Where(appointment => appointment.Date >= DateTime.UtcNow)
             .OrderByDescending(appointment => appointment.Date)
+            .Include(appointment => appointment.Contact)
             .GetPagedAsync(page, take);
 
         return appointments;
