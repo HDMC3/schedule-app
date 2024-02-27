@@ -1,11 +1,9 @@
-using System.Net;
 using Application.Contacts.Commands;
 using Application.Contacts.DTOs;
 using Application.Contacts.Queries;
 using Application.Wrappers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebAPI.Controllers;
 
@@ -49,6 +47,14 @@ public class ContactsController : ControllerBase
 
     [HttpPut]
     public async Task<IActionResult> Update(UpdateContactCommand command)
+    {
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(DeleteContactCommand command)
     {
         await _mediator.Send(command);
 
