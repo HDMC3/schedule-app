@@ -15,5 +15,6 @@ public static class ServiceRegistration
             options.UseNpgsql(configuration["DBC"]);
         });
         services.AddScoped<IContactRepository, ContactRepository>();
+        services.AddScoped<IAppointmentRepository, AppointmentRepository>();
     }
 }

@@ -31,8 +31,6 @@ public class ContactRepository : IContactRepository
 
     public async Task<DataCollection<Contact>> GetContacts(int page = 1, int take = 10)
     {
-        var offset = page - 1 > 0 ? (page - 1) * take : 0;
-
         var contacts = await _context.Contacts
             .OrderBy(contact => contact.Name)
             .GetPagedAsync(page, take);
