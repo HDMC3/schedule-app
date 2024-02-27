@@ -1,3 +1,4 @@
+using System.Net;
 using Application.Contacts.Commands;
 using Application.Contacts.DTOs;
 using Application.Contacts.Queries;
@@ -40,6 +41,14 @@ public class ContactsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateContactCommand command)
+    {
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateContactCommand command)
     {
         await _mediator.Send(command);
 

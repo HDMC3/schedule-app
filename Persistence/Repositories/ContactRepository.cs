@@ -1,3 +1,4 @@
+using Application.Contacts.Commands;
 using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using Domain.Entities;
@@ -45,7 +46,7 @@ public class ContactRepository : IContactRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateContact(Contact data)
+    public async Task UpdateContact(UpdateContactCommand data)
     {
         var contact = await _context.Contacts.FindAsync(data.Id);
         if (contact == null)
@@ -53,9 +54,34 @@ public class ContactRepository : IContactRepository
             throw new Exception("Contacto no encontrado");
         }
 
-        contact.Name = data.Name;
-        contact.Surname = data.Surname;
-        contact.LastModified = DateTime.UtcNow;
+        if (data.Name != null)
+        {
+            contact.Name = data.Name;
+        }
+
+        if (data.Surname != null)
+        {
+            contact.Surname = data.Surname;
+        }
+
+        if (data.PhoneNumbers != null)
+        {
+            await _context.PhoneNumbers
+                .Where(phone => phone.ContactId == data.Id)
+                .ExecuteDeleteAsync();
+
+            foreach (var phone in data.PhoneNumbers)
+            {
+                _context.PhoneNumbers.Add(new PhoneNumber
+                {
+                    Id = phone.Id,
+                    Number = phone.Number,
+                    ContactId = data.Id,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow
+                });
+            }
+        }
 
         await _context.SaveChangesAsync();
     }
