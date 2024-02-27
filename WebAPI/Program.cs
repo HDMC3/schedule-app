@@ -1,4 +1,5 @@
 using Persistence.Extensions;
+using Application.Extensions;
 namespace WebAPI;
 
 public class Program
@@ -9,6 +10,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddDatabaseContext(builder.Configuration);
+        builder.Services.AddApplication();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
