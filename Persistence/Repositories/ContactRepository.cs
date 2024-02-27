@@ -1,4 +1,5 @@
 using Application.Interfaces.Repositories;
+using Application.Wrappers;
 using Domain.Entities;
 using ProductsApp.Data.Extensions;
 
@@ -23,7 +24,7 @@ public class ContactRepository : IContactRepository
         return contact;
     }
 
-    public async Task<List<Contact>> GetContacts(int page = 1, int take = 10)
+    public async Task<DataCollection<Contact>> GetContacts(int page = 1, int take = 10)
     {
         var offset = page - 1 > 0 ? (page - 1) * take : 0;
 
