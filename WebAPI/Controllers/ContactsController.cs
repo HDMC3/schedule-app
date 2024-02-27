@@ -19,6 +19,14 @@ public class ContactsController : ControllerBase
     }
 
     [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<ContactDto>> Get(Guid id)
+    {
+        var contact = await _mediator.Send(new GetContactByIdQuery { Id = id });
+        return Ok(contact);
+    }
+
+    [HttpGet]
     public async Task<ActionResult<DataCollection<SummaryContactDto>>> GetAll([FromQuery] int page, [FromQuery] int take)
     {
         GetContactsQuery query = new()

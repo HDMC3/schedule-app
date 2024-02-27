@@ -1,6 +1,7 @@
 using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using ProductsApp.Data.Extensions;
 
 namespace Persistence.Repositories;
@@ -15,7 +16,10 @@ public class ContactRepository : IContactRepository
 
     public async Task<Contact> GetContactById(Guid id)
     {
-        var contact = await _context.Contacts.FindAsync(id);
+        var contact = await _context.Contacts
+            .Include(contact => contact.PhoneNumbers)
+            .FirstAsync(contact => contact.Id == id);
+
         if (contact == null)
         {
             throw new Exception("Contacto no encontrado");
