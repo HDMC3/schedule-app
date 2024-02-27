@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Persistence;
+namespace Persistence.Extensions;
 
-public static class PersistenceExtensions
+public static class ServiceRegistration
 {
     public static void AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
     {

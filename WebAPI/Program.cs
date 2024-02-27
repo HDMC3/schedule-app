@@ -1,4 +1,4 @@
-using Persistence;
+using Persistence.Extensions;
 namespace WebAPI;
 
 public class Program
