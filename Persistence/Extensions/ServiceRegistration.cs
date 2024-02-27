@@ -1,8 +1,8 @@
-using System.Data.Common;
+using Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Repositories;
 
 namespace Persistence.Extensions;
 
@@ -14,5 +14,6 @@ public static class ServiceRegistration
         {
             options.UseNpgsql(configuration["DBC"]);
         });
+        services.AddScoped<IContactRepository, ContactRepository>();
     }
 }
