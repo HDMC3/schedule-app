@@ -55,6 +55,14 @@ public class AppointmentsController : ControllerBase
         return Ok();
     }
 
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateAppointmentCommand command)
+    {
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
     [HttpDelete]
     public async Task<IActionResult> Delete(Guid id)
     {

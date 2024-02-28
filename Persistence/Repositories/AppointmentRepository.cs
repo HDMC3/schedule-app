@@ -61,6 +61,23 @@ public class AppointmentRepository : IAppointmentRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task UpdateAppointment(Guid id, Action<Appointment> predicate)
+    {
+        var appointment = await _context.Appointments
+            .Include(appointment => appointment.Contact)
+            .ThenInclude(contact => contact.PhoneNumbers)
+            .FirstAsync(appointment => appointment.Id == id);
+
+        if (appointment == null)
+        {
+            throw new Exception("Cita no encontrada");
+        }
+
+        predicate(appointment);
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task DeleteAppointment(Guid id)
     {
         var appointment = await _context.Appointments.FindAsync(id);

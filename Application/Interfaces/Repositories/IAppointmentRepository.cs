@@ -10,4 +10,5 @@ public interface IAppointmentRepository
     public Task<DataCollection<Appointment>> GetAppointments(int page, int take);
     public Task CreateAppointment(Appointment appointment);
     public Task DeleteAppointment(Guid id);
+    public Task UpdateAppointment(Guid id, Action<Appointment> predicate);
 }
