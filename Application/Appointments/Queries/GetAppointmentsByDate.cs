@@ -4,12 +4,12 @@ using MediatR;
 
 namespace Application.Appointments.Queries;
 
-public class GetAppointmentsByDateQuery : IRequest<List<AppointmentDto>>
+public class GetAppointmentsByDateQuery : IRequest<List<AppointmentToCalendarDto>>
 {
     public DateTime Date { get; init; }
 }
 
-public class GetAppointmentsByDateQueryHandler : IRequestHandler<GetAppointmentsByDateQuery, List<AppointmentDto>>
+public class GetAppointmentsByDateQueryHandler : IRequestHandler<GetAppointmentsByDateQuery, List<AppointmentToCalendarDto>>
 {
     IAppointmentRepository _appointmentRepository;
     public GetAppointmentsByDateQueryHandler(IAppointmentRepository appointmentRepository)
@@ -17,13 +17,13 @@ public class GetAppointmentsByDateQueryHandler : IRequestHandler<GetAppointments
         _appointmentRepository = appointmentRepository;
     }
 
-    public async Task<List<AppointmentDto>> Handle(GetAppointmentsByDateQuery request, CancellationToken cancellationToken)
+    public async Task<List<AppointmentToCalendarDto>> Handle(GetAppointmentsByDateQuery request, CancellationToken cancellationToken)
     {
         var appointments = await _appointmentRepository.GetAppointmentsByDate(request.Date);
 
         var appointmentsDto = appointments.Select(appointment =>
         {
-            return new AppointmentDto
+            return new AppointmentToCalendarDto
             {
                 Id = appointment.Id,
                 Description = appointment.Description,

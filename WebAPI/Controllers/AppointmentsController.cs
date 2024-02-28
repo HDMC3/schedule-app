@@ -18,16 +18,23 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<DataCollection<SummaryAppointmentsDto>>> GetAll([FromQuery] int page, [FromQuery] int take)
+    [Route("{id}")]
+    public async Task<ActionResult<AppointmentDto>> GetById(Guid id)
     {
-        return await _mediator.Send(new GetAppointmentsQuery { Page = page, Take = take });
+        return await _mediator.Send(new GetAppointmentByIdQuery { Id = id });
     }
 
     [HttpGet]
     [Route("on-date")]
-    public async Task<ActionResult<List<AppointmentDto>>> GetByDate(DateTime date)
+    public async Task<ActionResult<List<AppointmentToCalendarDto>>> GetByDate(DateTime date)
     {
         return await _mediator.Send(new GetAppointmentsByDateQuery { Date = date }); ;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<DataCollection<SummaryAppointmentsDto>>> GetAll([FromQuery] int page, [FromQuery] int take)
+    {
+        return await _mediator.Send(new GetAppointmentsQuery { Page = page, Take = take });
     }
 
     [HttpPost]

@@ -18,6 +18,7 @@ public class AppointmentRepository : IAppointmentRepository
     {
         var appointment = await _context.Appointments
             .Include(appointment => appointment.Contact)
+            .ThenInclude(contact => contact.PhoneNumbers)
             .FirstAsync(appointment => appointment.Id == id);
 
         if (appointment == null)
