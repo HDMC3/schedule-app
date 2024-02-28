@@ -23,6 +23,13 @@ public class AppointmentsController : ControllerBase
         return await _mediator.Send(new GetAppointmentsQuery { Page = page, Take = take });
     }
 
+    [HttpGet]
+    [Route("on-date")]
+    public async Task<ActionResult<List<AppointmentDto>>> GetByDate(DateTime date)
+    {
+        return await _mediator.Send(new GetAppointmentsByDateQuery { Date = date }); ;
+    }
+
     [HttpPost]
     [Route("contact")]
     public async Task<IActionResult> Create(CreateExistingContactAppointmentCommand command)

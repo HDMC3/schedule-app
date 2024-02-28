@@ -37,6 +37,7 @@ public class AppointmentRepository : IAppointmentRepository
                     && appointment.Date.Year == date.Year
             )
             .Include(appointment => appointment.Contact)
+            .ThenInclude(contact => contact.PhoneNumbers)
             .ToListAsync();
 
         return appointments;
