@@ -54,4 +54,12 @@ public class AppointmentsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Send(new DeleteAppointmentCommand { Id = id });
+
+        return Ok();
+    }
 }
