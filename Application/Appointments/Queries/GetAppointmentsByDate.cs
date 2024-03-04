@@ -28,7 +28,8 @@ public class GetAppointmentsByDateQueryHandler : IRequestHandler<GetAppointments
                 Id = appointment.Id,
                 Description = appointment.Description,
                 ContactName = appointment.Contact.Name + " " + appointment.Contact.Surname,
-                PhoneNumbers = appointment.Contact.PhoneNumbers.Select(phone => phone.Number).ToArray()
+                PhoneNumbers = appointment.Contact.PhoneNumbers.Select(phone => phone.Number).ToArray(),
+                Date = appointment.Date
             };
         }).ToList();
 
